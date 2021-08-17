@@ -2,17 +2,32 @@
 #include "date.h"
 #include "condition_parser.h"
 #include "node.h"
+
 #include "test_runner.h"
 
 #include <iostream>
 #include <stdexcept>
+#include <vector>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
 
 using namespace std;
 
+
+//немного выебонов
 string ParseEvent(istream& is) {
-  string e;
-  is >> e; //it also needs to handle cases of events which contain spaces
-  return e; // do with while(){}
+  string e; 
+  vector<string> event_tokenz;
+
+  while (is >> e) {event_tokenz.push_back(e);}\
+
+  const char* const delim = " ";
+
+  ostringstream imploded;
+  copy(event_tokenz.begin(), event_tokenz.end(), ostream_iterator<string>(imploded, delim));
+
+  return imploded.str();
 }
 
 // split into single tokens
@@ -53,14 +68,14 @@ int main() {
       db.Add(date, event);
     } else if (command == "Print") {
       db.Print(cout);
-    } else if (command == "Del") {
+    } /*else if (command == "Del") {
       auto condition = ParseCondition(is); //condition is of shared_ptr type
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
       };
       int count = db.RemoveIf(predicate);
       cout << "Removed " << count << " entries" << endl;
-    } else if (command == "Find") {
+    }*/ else if (command == "Find") {
       auto condition = ParseCondition(is);
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
@@ -71,13 +86,13 @@ int main() {
         cout << entry << endl;
       }
       cout << "Found " << entries.size() << " entries" << endl;
-    } else if (command == "Last") {
+    } /*else if (command == "Last") {
       try {
           cout << db.Last(ParseDate(is)) << endl;
       } catch (invalid_argument&) {
           cout << "No entries" << endl;
       }
-    } else if (command.empty()) {
+    }*/ else if (command.empty()) {
       continue;
     } else {
       throw logic_error("Unknown command: " + command);

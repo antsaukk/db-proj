@@ -1,7 +1,5 @@
 #include <vector>
 
-//Node, EmptyNode, DateComparisonNode, EventComparisonNode и LogicalOperationNode
-
 enum class Comparison {
 	Less,
 	LessOrEqual,
@@ -19,12 +17,12 @@ enum class LogicalOperation {
 class Node {
 public:
 	virtual bool Evaluate(const Date& date, const std::string& event);
-}
+};
 
 class EmptyNode : public Node {
 public: 
 	bool Evaluate(const Date& date, const std::string& event);
-}
+};
 
 class DateComparisonNode : public Node {
 public: 
@@ -34,10 +32,16 @@ public:
 	{}
 
 	bool Evaluate(const Date& date, const std::string& event);
+
+	//does it need d2 ? 
+	bool Less(const Date& d1, const Date& d2) const();
+	bool Equal(const Date& d1, const Date& d2) const();
+	bool Greater(const Date& d1, const Date& d2) const();
+
 private:
 	Comparison _cmp;
 	Date _date; 
-}
+};
 
 class EventComparisonNode : public Node {
 public: 
@@ -50,10 +54,20 @@ public:
 private: 
 	Comparison _cmp; 
 	std::string _name;
-}
+};
 
 class LogicalOperationNode : public Node {
-public: 
+public:
+	LogicalOperationNode(const LogicalOperation& op, 
+						const shared_ptr<Node>& n1, 
+						const shared_ptr<Node>& n2) : 
+	_op(op), 
+	_n1(n1),
+	_n2(n2)
+	{}
 	bool Evaluate(const Date& date, const std::string& event);
-}
-
+private: 
+	LogicalOperation _op;
+	shared_ptr<Node> _n1;
+	shared_ptr<Node> _n2;
+};

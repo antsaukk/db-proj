@@ -1,21 +1,37 @@
 #include "date.h"
-#include "token.cpp"
 
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 
 
 using namespace std; 
 
 void ParseEvent(istream& is){
 
-	string e;
+	string e; 
+	vector<string> event_tokenz;
 
-	is >> e;
+	while (is >> e) {event_tokenz.push_back(e);}
 
-	cout << e << endl;
+	//is >> e;
 
+	/*for(size_t i = 0; i < event_tokenz.size(); i++) {
+		cout << event_tokenz[i] << " ";
+	}*/
+
+	const char* const delim = " ";
+
+	ostringstream imploded;
+	copy(event_tokenz.begin(), event_tokenz.end(), ostream_iterator<string>(imploded, delim));
+
+	cout << imploded.str() ;
+	//cout << is.str() << endl;
+	/*string e; 
+	getline(is, e, {});
+	cout << e << endl;*/ 
 };
 
 
@@ -27,7 +43,7 @@ Date ParseDate(istream& is){
 
 	replace(d.begin(), d.end(), '-', ' ');
 
-	cout << d << endl;
+	//cout << d << endl;
 
 	stringstream ss(d); 
 
@@ -35,7 +51,7 @@ Date ParseDate(istream& is){
 
 	for (size_t i = 0; i < 3; i++) {
 		ss >> date[i]; 
-		cout << date[i] << endl;
+		//cout << date[i] << endl;
 	}
 
 	Date D(date[0], date[1], date[2]);
@@ -76,21 +92,21 @@ int main() {
    		string command;
     	is >> command;
     	if (command == "Add") {
-    		cout << command << endl; 
-    		cout << is.str() << endl; 
+    		//cout << command << endl; 
+    		//cout << is.str() << endl; 
 
     		auto D = ParseDate(is);
 
-    		cout << "test :" << endl; 
+    		//cout << "test :" << endl; 
 			/*cout << D.getYear() << endl;
 			cout << D.getMonth() << endl;
 			cout << D.getDay() << endl;*/ 
 
-    		cout << D;
+    		//cout << D;
 
-			cout << "done" << endl;
+			//cout << "done" << endl;
 
-    		//ParseEvent(is);
+    		ParseEvent(is);
     	}
 	}
 	return 0;
