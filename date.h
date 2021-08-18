@@ -1,8 +1,9 @@
 #pragma once
 
-#include <string>
+#include <vector>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 //.h
 
@@ -15,7 +16,7 @@ public:
 	std::string getMonth() const { return _month; }
 	std::string getDay() const { return _day; }
 
-	std::string getDate();
+	std::string getDate() const;
 
 private:
 	std::string _year;

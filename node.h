@@ -1,4 +1,7 @@
+#pragma once
+
 #include <vector>
+#include <memory>
 
 enum class Comparison {
 	Less,
@@ -16,7 +19,7 @@ enum class LogicalOperation {
 
 class Node {
 public:
-	virtual bool Evaluate(const Date& date, const std::string& event);
+	virtual bool Evaluate(const Date& date, const std::string& event) = 0;
 };
 
 class EmptyNode : public Node {
@@ -34,9 +37,9 @@ public:
 	bool Evaluate(const Date& date, const std::string& event);
 
 	//does it need d2 ? 
-	bool Less(const Date& d1, const Date& d2) const();
-	bool Equal(const Date& d1, const Date& d2) const();
-	bool Greater(const Date& d1, const Date& d2) const();
+	/*bool Less(const Date& d1, const Date& d2) const;
+	bool Equal(const Date& d1, const Date& d2) const;
+	bool Greater(const Date& d1, const Date& d2) const;*/
 
 private:
 	Comparison _cmp;
@@ -59,8 +62,8 @@ private:
 class LogicalOperationNode : public Node {
 public:
 	LogicalOperationNode(const LogicalOperation& op, 
-						const shared_ptr<Node>& n1, 
-						const shared_ptr<Node>& n2) : 
+						const std::shared_ptr<Node>& n1, 
+						const std::shared_ptr<Node>& n2) : 
 	_op(op), 
 	_n1(n1),
 	_n2(n2)
@@ -68,6 +71,6 @@ public:
 	bool Evaluate(const Date& date, const std::string& event);
 private: 
 	LogicalOperation _op;
-	shared_ptr<Node> _n1;
-	shared_ptr<Node> _n2;
+	std::shared_ptr<Node> _n1;
+	std::shared_ptr<Node> _n2;
 };
