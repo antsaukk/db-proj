@@ -29,9 +29,6 @@ std::ostream& operator<<(std::ostream& out, const Date &date) {
 	return out;
 }
 
-// split into single tokens
-// construct Date obj
-// return Date obj
 Date ParseDate(std::istream& is) {
   std::string d;
   is >> d;
@@ -45,6 +42,9 @@ Date ParseDate(std::istream& is) {
   }
 
   Date D(date[0], date[1], date[2]);
+
+  std::cout << "we parsed the date: " << "'" << D.getYear() << "'"
+  << "'" << D.getMonth() << "'" << "'" << D.getDay() << "'" << std::endl;
 
   return D;
 }

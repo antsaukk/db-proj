@@ -1,5 +1,7 @@
 #include "date.h"
 
+#include "node.cpp"
+
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -27,7 +29,7 @@ void ParseEvent(istream& is){
 	ostringstream imploded;
 	copy(event_tokenz.begin(), event_tokenz.end(), ostream_iterator<string>(imploded, delim));
 
-	cout << imploded.str() ;
+	cout << imploded.str() << imploded.str().length() << endl;;
 	//cout << is.str() << endl;
 	/*string e; 
 	getline(is, e, {});
@@ -86,6 +88,14 @@ ostream& operator<<(ostream& out, const Date &date) {
 
 int main() {
 
+	string y = "2017"; 
+	string m = "07"; 
+	string dd = "08";
+
+	string y1 = "2017";
+	string m1 = "06";
+	string dd1 = "01";
+
 	for (string line; getline(cin, line); ) {
     	istringstream is(line);
 
@@ -97,14 +107,25 @@ int main() {
 
     		auto D = ParseDate(is);
 
-    		//cout << "test :" << endl; 
-			/*cout << D.getYear() << endl;
-			cout << D.getMonth() << endl;
-			cout << D.getDay() << endl;*/ 
+    		/*Date d1(y, m, dd);
+    		Date d2(y, m, dd);
 
-    		//cout << D;
+    		cout << (d1 == d2) << endl;
+    		cout << (d1 < d2) << endl;
+    		cout << (d1 > d2) << endl;
+    		cout << "---" << endl;
 
-			//cout << "done" << endl;
+    		Date d3(y1, m1, dd1);
+
+    		cout << (d1 == d3) << endl;
+    		cout << (d1 < d3) << endl;
+    		cout << (d1 > d3) << endl;
+    		cout << "---" << endl;
+
+    		cout << (d2 == d3) << endl;
+    		cout << (d2 < d3) << endl;
+    		cout << (d2 > d3) << endl;
+    		cout << "---" << endl;*/
 
     		ParseEvent(is);
     	}

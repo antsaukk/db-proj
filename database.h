@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 #include <iterator>
+#include <assert.h>
 
 class Database {
 public:
