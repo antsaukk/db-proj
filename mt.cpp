@@ -7,11 +7,13 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <map>
+#include <set>
 
 
 using namespace std; 
 
-void ParseEvent(istream& is){
+string ParseEvent(istream& is){
 
 	string e; 
 	vector<string> event_tokenz;
@@ -29,7 +31,9 @@ void ParseEvent(istream& is){
 	ostringstream imploded;
 	copy(event_tokenz.begin(), event_tokenz.end(), ostream_iterator<string>(imploded, delim));
 
-	cout << imploded.str() << imploded.str().length() << endl;;
+	return imploded.str();
+
+	//cout << imploded.str() << imploded.str().length() << endl;;
 	//cout << is.str() << endl;
 	/*string e; 
 	getline(is, e, {});
@@ -80,7 +84,7 @@ ostream& operator<<(ostream& out, const Date &date) {
 		day = '0' + day;
 	}
 
-	out << year << '-' << month << '-' << day << endl;
+	out << year << '-' << month << '-' << day;
 
 	return out;
 }
@@ -96,6 +100,9 @@ int main() {
 	string m1 = "06";
 	string dd1 = "01";
 
+	map<Date, set<string>> db_balance;
+	map<Date, vector<string>> db_order;
+
 	for (string line; getline(cin, line); ) {
     	istringstream is(line);
 
@@ -106,7 +113,36 @@ int main() {
     		//cout << is.str() << endl; 
 
     		auto D = ParseDate(is);
+    		auto E = ParseEvent(is);
 
+    		cout << E << endl;
+
+			//bool t = db_balance[D].insert(E).second;
+
+			if (!db_balance.count(D)) {
+				cout << "DOES NOT EXIST\n";
+				if (db_balance[D].insert(E).second) { db_order[D].push_back(E); }	
+			} else {
+				cout << "EXIST\n";
+				if (db_balance.at(D).insert(E).second) { db_order.at(D).push_back(E); } 
+			}
+
+			cout << "\nprinting balanced collection: " << endl;
+			for (auto& [date, event]: db_balance) {
+				cout << date << " ";
+				for(auto it = event.begin(); it != event.end(); it++) {
+					cout << *it << endl;
+				}
+			}
+			cout << "\nprinting ordered collection: " << endl;
+			for (auto& [date, event]: db_order) {
+				cout << date << " "; 
+				for(auto it = event.begin(); it != event.end(); it++) {
+					cout << *it << endl;
+				}
+			}
+
+			
     		/*Date d1(y, m, dd);
     		Date d2(y, m, dd);
 
@@ -125,10 +161,26 @@ int main() {
     		cout << (d2 == d3) << endl;
     		cout << (d2 < d3) << endl;
     		cout << (d2 > d3) << endl;
-    		cout << "---" << endl;*/
+    		cout << "---" << endl;
 
-    		ParseEvent(is);
+    		cout << (d3 == d3) << endl;
+    		cout << (d3 < d3) << endl;
+    		cout << (d3 > d3) << endl;
+    		cout << "---" << endl;
+
+    		cout << (d2 == d2) << endl;
+    		cout << (d2 < d2) << endl;
+    		cout << (d2 > d2) << endl;
+    		cout << "---" << endl;
+
+    		cout << (d1 == d1) << endl;
+    		cout << (d1 < d1) << endl;
+    		cout << (d1 > d1) << endl;
+    		cout << "---" << endl;
+
+    		ParseEvent(is);*/
     	}
 	}
+
 	return 0;
 }

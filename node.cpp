@@ -24,7 +24,7 @@ bool operator<(const Date& d1, const Date& d2) {
 		else if(month1 == month2) {
 			if (day1 < day2) { res = true; }
 			else { res = false; }
-		}
+		} else { res = false; }
 	} else { res = false; }
 
 	return res; 
