@@ -43,8 +43,5 @@ Date ParseDate(std::istream& is) {
 
   Date D(date[0], date[1], date[2]);
 
-  std::cout << "we parsed the date: " << "'" << D.getYear() << "'"
-  << "'" << D.getMonth() << "'" << "'" << D.getDay() << "'" << std::endl;
-
   return D;
 }

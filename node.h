@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <memory>
+#include <stdexcept>
 
 enum class Comparison {
 	Less,
@@ -36,11 +38,6 @@ public:
 
 	bool Evaluate(const Date& date, const std::string& event);
 
-	//does it need d2 ? 
-	/*bool Less(const Date& d1, const Date& d2) const;
-	bool Equal(const Date& d1, const Date& d2) const;
-	bool Greater(const Date& d1, const Date& d2) const;*/
-
 private:
 	Comparison _cmp;
 	Date _date; 
@@ -54,9 +51,10 @@ public:
 	{}
 
 	bool Evaluate(const Date& date, const std::string& event);
+	bool compareEvents(const std::string& str);
 private: 
 	Comparison _cmp; 
-	std::string _name;
+	const std::string _name;
 };
 
 class LogicalOperationNode : public Node {

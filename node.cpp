@@ -1,11 +1,5 @@
 #include "node.h"
 
-#include <stdexcept>
-
-bool EmptyNode::Evaluate(const Date& date, const std::string& event) {
-	return true; 
-}
-
 bool operator<(const Date& d1, const Date& d2) {
 	int day1 = std::stoi(d1.getDay()); 
 	int day2 = std::stoi(d2.getDay());
@@ -38,31 +32,29 @@ bool operator>(const Date& d1, const Date& d2) {
 	return (!(d1 < d2) && !(d1 == d2));
 }
 
+bool EmptyNode::Evaluate(const Date& date, const std::string& event) {
+	return true; 
+}
+
 bool DateComparisonNode::Evaluate(const Date& date, const std::string& event) {
 	bool result = true; 
 	switch(_cmp) {
 		case Comparison::Less:
-			//resuls = Less(date, _date); 
 			result = (date < _date); 
 			break;
 		case Comparison::LessOrEqual: 
-			//result = Less(date, _date) || Equal(date, _date);
-			result = (date <_date) || (date == _date);
+			result = (date < _date) || (date == _date);
 			break;
 		case Comparison::Greater:
-			//result = Greater(date, _date);
 			result = (date > _date);
 			break; 
 		case Comparison::GreaterOrEqual:
-			//result = Greater(date, _date) || Equal(date, _date);
-			result = (date > _date) || (date == date);
+			result = (date > _date) || (date == _date);
 			break;
 		case Comparison::Equal: 
-			//result = Equal(date, _date);
 			result = (date == _date);
 			break; 
 		case Comparison::NotEqual:
-			//result = !Equal(date, _date);
 			result = !(date == _date);
 			break;
 		default: 
@@ -71,14 +63,42 @@ bool DateComparisonNode::Evaluate(const Date& date, const std::string& event) {
 	return result; 
 }
 
+bool EventComparisonNode::compareEvents(const std::string& str) {
+	/*std::cout << str << " " << _name << " " << _name.compare(str) << std::endl;
+	if (!str.compare(_name)) return true;
+	else return false;*/
+	std::cout << (str.length() == _name.length()) << str.length() << " " << _name.length() << std::endl;
+	std::cout << "'";
+	for(size_t i = 0; i < str.length(); i++) {
+		std::cout << str[i]; 
+	}
+	std::cout << "'";
+	if (str.length() != _name.length()) return false; 
+	bool r = (str[0] == _name[0]);
+	std::cout << r;
+	for(size_t i = 1; i < str.length(); i++) {
+		r &= (str[i] == _name[i]);
+		std::cout << r; 
+	}
+	return r;
+}
+
 bool EventComparisonNode::Evaluate(const Date& date, const std::string& event) {
 	bool result = true; 
-	switch(_cmp) {
-		case Comparison::Equal:
-			result = (event == _name); 
+	/*std::string n = "Holiday"; 
+	std::string t = "Holiday";
+	std::cout << !n.compare(t) << " ";*/
+	switch(_cmp) { 
+		case Comparison::Equal: 
+			result = compareEvents(event);
+
+			std::cout << "EQ " << event << " " << _name << " " << result << std::endl;
+
 			break; 
 		case Comparison::NotEqual:
-			result = (event != _name);
+			result = !compareEvents(event); 
+			std::cout << "NOT " << event << " " << _name << " " << result << std::endl;
+
 			break; 
 		default: 
 			throw std::logic_error("Not valid comparison operator");
