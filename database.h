@@ -16,17 +16,15 @@ public:
 	std::ostream& Print(std::ostream& os); //???
 
 	template <typename T>
-	std::vector<std::string> FindIf(T pred) { //Find date condition seems to work, but not with event
+	std::vector<std::string> FindIf(T predicate) { //Find date condition seems to work, but not with event
 		int counter = 0;
 		std::vector<std::string> result;
 		for (auto& [date, events]: db_order){
 			for (auto& e : events) {
-				auto B = pred(date, e);
-				std::cout << B << std::endl;
-				if (B) {
+				if (predicate(date, e)) {
 					result.push_back(date.getDate() + " " + e);
 					counter+=1;
-					//print? 
+					//print
 				}
 			}
 		}

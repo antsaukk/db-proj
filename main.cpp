@@ -17,33 +17,31 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <deque>
 #include <sstream>
 #include <algorithm>
 #include <iterator>
 
 using namespace std;
 
-
-//немного выебонов
 string ParseEvent(istream& is) {
-  string e; 
-  vector<string> event_tokenz;
+  std::istreambuf_iterator<char> eos;
+  std::string s(std::istreambuf_iterator<char>(is), eos);
 
-  while (is >> e) {event_tokenz.push_back(e);}\
+  deque<char> e;
+  string ss;
+  for (size_t i = 0; i < s.length(); i++) { e.push_back(s[i]); } 
+  while(e.front() == ' ') { e.pop_front(); }
+  while(!e.empty()) { ss += e.front(); e.pop_front(); }
 
-  const char* const delim = " ";
-
-  ostringstream imploded;
-  copy(event_tokenz.begin(), event_tokenz.end(), ostream_iterator<string>(imploded, delim));
-
-  return imploded.str();
+  return ss;
 }
 
 
-//void TestAll();
+void TestAll();
 
 int main() {
-  //TestAll();
+  TestAll();
 
   Database db;
 
@@ -92,7 +90,7 @@ int main() {
   return 0;
 }
 
-/*void TestParseEvent() {
+void TestParseEvent() {
   {
     istringstream is("event");
     AssertEqual(ParseEvent(is), "event", "Parse event without leading spaces");
@@ -106,12 +104,12 @@ int main() {
     vector<string> events;
     events.push_back(ParseEvent(is));
     events.push_back(ParseEvent(is));
-    //AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
+    AssertEqual(events, vector<string>{"first event  ", "second event"}, "Parse multiple events");
   }
 }
 
 void TestAll() {
   TestRunner tr;
   tr.RunTest(TestParseEvent, "TestParseEvent");
-  tr.RunTest(TestParseCondition, "TestParseCondition");
-}*/
+  //tr.RunTest(TestParseCondition, "TestParseCondition");
+}

@@ -64,21 +64,10 @@ bool DateComparisonNode::Evaluate(const Date& date, const std::string& event) {
 }
 
 bool EventComparisonNode::compareEvents(const std::string& str) {
-	/*std::cout << str << " " << _name << " " << _name.compare(str) << std::endl;
-	if (!str.compare(_name)) return true;
-	else return false;*/
-	std::cout << (str.length() == _name.length()) << str.length() << " " << _name.length() << std::endl;
-	std::cout << "'";
-	for(size_t i = 0; i < str.length(); i++) {
-		std::cout << str[i]; 
-	}
-	std::cout << "'";
-	if (str.length() != _name.length()) return false; 
+	if (str.length() != _name.length()) return false;
 	bool r = (str[0] == _name[0]);
-	std::cout << r;
 	for(size_t i = 1; i < str.length(); i++) {
 		r &= (str[i] == _name[i]);
-		std::cout << r; 
 	}
 	return r;
 }
@@ -92,12 +81,12 @@ bool EventComparisonNode::Evaluate(const Date& date, const std::string& event) {
 		case Comparison::Equal: 
 			result = compareEvents(event);
 
-			std::cout << "EQ " << event << " " << _name << " " << result << std::endl;
+			//std::cout << "EQ " << event << " " << _name << " " << result << std::endl;
 
 			break; 
 		case Comparison::NotEqual:
 			result = !compareEvents(event); 
-			std::cout << "NOT " << event << " " << _name << " " << result << std::endl;
+			//std::cout << "NOT " << event << " " << _name << " " << result << std::endl;
 
 			break; 
 		default: 
