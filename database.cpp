@@ -15,15 +15,14 @@ std::ostream& Database::Print(std::ostream& os){
 	return os;
 }
 
-std::string Last(const Date& d){
+std::string Database::Last(const Date& date){
 	std::string message = "";
-	/*auto date_iterator = db_order.upper_bound(d); 
+	auto date_iterator = db_order.upper_bound(date); 
 	if (date_iterator != db_order.begin()) {
-		std::prev(date_iterator);
-		//message = date_iterator->first//get string 
-		//+ " " + date_iterator->second[date_iterator->second.size() - 1];
+		auto pv_date_it = std::prev(date_iterator, 1);
+		message = pv_date_it->first.getDate() + " " + pv_date_it->second.back();
 	} else {
 		message = "No entries";
-	}*/
+	}
 	return message;
 }

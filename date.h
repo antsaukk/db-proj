@@ -5,23 +5,21 @@
 #include <sstream>
 #include <algorithm>
 
-//.h
-
 class Date {
 public: 
-	Date(std::string &year, std::string &month, std::string &day) :
+	Date(int year, int month, int day) :
 	_year(year), _month(month), _day(day) {}
 
-	std::string getYear() const { return _year; }
-	std::string getMonth() const { return _month; }
-	std::string getDay() const { return _day; }
+	int getYear() const { return _year; }
+	int getMonth() const { return _month; }
+	int getDay() const { return _day; }
 
 	std::string getDate() const;
 
 private:
-	std::string _year;
-	std::string _month;
-	std::string _day;
+	int _year;
+	int _month;
+	int _day;
 };
 
 

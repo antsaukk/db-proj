@@ -10,7 +10,8 @@
 #include "node.cpp"
 #include "condition_parser.cpp"
 #include "token.cpp"
-//#include "condition_parser_test.cpp"
+#include "condition_parser_test.cpp"
+#include "database_test.cpp"
 
 #include "test_runner.h"
 
@@ -25,8 +26,8 @@
 using namespace std;
 
 string ParseEvent(istream& is) {
-  std::istreambuf_iterator<char> eos;
-  std::string s(std::istreambuf_iterator<char>(is), eos);
+  string s;
+  getline(is, s);
 
   deque<char> e;
   string ss;
@@ -74,13 +75,13 @@ int main() {
         cout << entry << endl;
       }
       cout << "Found " << entries.size() << " entries" << endl;
-    } /*else if (command == "Last") {
+    } else if (command == "Last") {
       try {
           cout << db.Last(ParseDate(is)) << endl;
       } catch (invalid_argument&) {
           cout << "No entries" << endl;
       }
-    }*/ else if (command.empty()) {
+    } else if (command.empty()) {
       continue;
     } else {
       throw logic_error("Unknown command: " + command);
@@ -111,5 +112,7 @@ void TestParseEvent() {
 void TestAll() {
   TestRunner tr;
   tr.RunTest(TestParseEvent, "TestParseEvent");
-  //tr.RunTest(TestParseCondition, "TestParseCondition");
+  tr.RunTest(TestParseCondition, "TestParseCondition");
+  tr.RunTest(TestFind, "TestFind");
+  tr.RunTest(TestFind, "TestLast");
 }

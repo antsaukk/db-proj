@@ -1,14 +1,14 @@
 #include "node.h"
 
 bool operator<(const Date& d1, const Date& d2) {
-	int day1 = std::stoi(d1.getDay()); 
-	int day2 = std::stoi(d2.getDay());
+	int day1 = d1.getDay(); 
+	int day2 = d2.getDay();
 
-	int month1 = std::stoi(d1.getMonth()); 
-	int month2 = std::stoi(d2.getMonth()); 
+	int month1 = d1.getMonth(); 
+	int month2 = d2.getMonth(); 
 
-	int year1 = std::stoi(d1.getYear()); 
-	int year2 = std::stoi(d2.getYear());
+	int year1 = d1.getYear(); 
+	int year2 = d2.getYear();
 
 	bool res = true; 
 
@@ -74,20 +74,12 @@ bool EventComparisonNode::compareEvents(const std::string& str) {
 
 bool EventComparisonNode::Evaluate(const Date& date, const std::string& event) {
 	bool result = true; 
-	/*std::string n = "Holiday"; 
-	std::string t = "Holiday";
-	std::cout << !n.compare(t) << " ";*/
 	switch(_cmp) { 
-		case Comparison::Equal: 
+		case Comparison::Equal:
 			result = compareEvents(event);
-
-			//std::cout << "EQ " << event << " " << _name << " " << result << std::endl;
-
 			break; 
 		case Comparison::NotEqual:
-			result = !compareEvents(event); 
-			//std::cout << "NOT " << event << " " << _name << " " << result << std::endl;
-
+			result = !compareEvents(event);
 			break; 
 		default: 
 			throw std::logic_error("Not valid comparison operator");

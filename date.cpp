@@ -1,21 +1,25 @@
 #include "date.h"
 
+std::string zeroComplement(std::string& str){
+	return '0' + str;
+}
+
 std::string Date::getDate() const {
-	std::string year = getYear(); 
-	std::string month = getMonth(); 
-	std::string day = getDay(); 
+	std::string year = std::to_string(getYear()); 
+	std::string month = std::to_string(getMonth()); 
+	std::string day = std::to_string(getDay()); 
 
 	if (year.length() < 4) {
 		unsigned int r = 4 - year.length();
 		for (size_t i = 0; i < r; i++) {
-			year = '0' + year; 
+			year = zeroComplement(year);
 		}
 	}	
 	if (month.length() != 2) {
-		month = '0' + month;
+		month = zeroComplement(month);
 	}
 	if (day.length() != 2) {
-		day = '0' + day;
+		day = zeroComplement(day);
 	}
 
 	std::string build = (year + '-' + month + '-' + day);
@@ -41,7 +45,7 @@ Date ParseDate(std::istream& is) {
     ss >> date[i]; 
   }
 
-  Date D(date[0], date[1], date[2]);
+  Date D(std::stoi(date[0]), std::stoi(date[1]), std::stoi(date[2]));
 
   return D;
 }
