@@ -22,4 +22,13 @@ private:
 	int _day;
 };
 
+std::string zeroComplement(std::string& str);
+
+bool operator<(const Date& d1, const Date& d2); 
+bool operator==(const Date& d1, const Date& d2); 
+bool operator>(const Date& d1, const Date& d2);
+
+std::ostream& operator<<(std::ostream& out, const Date &date);
+
+Date ParseDate(std::istream& is);
 

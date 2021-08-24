@@ -13,10 +13,10 @@ class Database {
 public:
 	void Add(const Date& d, const std::string& e);
 
-	std::ostream& Print(std::ostream& os); //???
+	std::ostream& Print(std::ostream& os) const;
 
 	template <typename T>
-	std::vector<std::string> FindIf(T predicate) { //Find date condition seems to work, but not with event
+	std::vector<std::string> FindIf(T predicate) const{
 		int counter = 0;
 		std::vector<std::string> result;
 		for (auto& [date, events]: db_order){
@@ -32,24 +32,29 @@ public:
 		return result;
 	}
 
-	/*template <typename T>
-	int RemoveIf(T pred) {
+	template <typename T>
+	int RemoveIf(T predicate) {
 		int counter = 0;
-		//if predicate is empty - remove everything from database.h
-		if (pred.empty()) { //empty is not implemented
-			count = db_balance.size(); 
-			db_balance.clear();
-			db_order.clear();
-		} else {
-			for(auto& [date, events] : db_order) {
-				for(auto& e : events) {
-					 
-				}
+		for(auto& [date, events] : db_order) {
+			auto pred = [predicate, date=date](const std::string& event) {
+        		return !predicate(date,event);
+      		};
+			auto elements_to_delete = std::stable_partition(events.begin(), events.end(), pred);
+			counter += events.end() - elements_to_delete;
+			for(auto it = elements_to_delete; it != events.end(); it++) {
+				db_balance.at(date).erase(*it);
+			}
+			events.erase(elements_to_delete, events.end());
+			if (events.empty()) {
+				db_balance.erase(date); 
+				db_order.erase(date); 
 			}
 		}
-	}*/
+		//assert(db_order.size() == db_balance.size());
+		return counter;
+	}
 
-	std::string Last(const Date& d); 
+	std::string Last(const Date& d) const; 
 
 private:
 	std::map<Date, std::set<std::string>> db_balance;

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <stdexcept>
 #include <sstream>
 #include <vector>
+
 using namespace std;
 
 enum class TokenType {

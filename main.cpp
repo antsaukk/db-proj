@@ -1,17 +1,16 @@
-// uncomment later
-//#include "database.h" 
-//#include "date.h"
-//#include "condition_parser.h"
-//#include "node.h"
+#include "database.h" 
+#include "date.h"
+#include "condition_parser.h"
+#include "node.h"
+#include "token.h"
 
-//remove later
-#include "date.cpp"
+/*#include "date.cpp"
 #include "database.cpp"
 #include "node.cpp"
 #include "condition_parser.cpp"
 #include "token.cpp"
 #include "condition_parser_test.cpp"
-#include "database_test.cpp"
+#include "database_test.cpp"*/
 
 #include "test_runner.h"
 
@@ -39,10 +38,10 @@ string ParseEvent(istream& is) {
 }
 
 
-void TestAll();
+//void TestAll();
 
 int main() {
-  TestAll();
+  //TestAll();
 
   Database db;
 
@@ -57,14 +56,14 @@ int main() {
       db.Add(date, event);
     } else if (command == "Print") {
       db.Print(cout);
-    } /*else if (command == "Del") {
-      auto condition = ParseCondition(is); //condition is of shared_ptr type
+    } else if (command == "Del") {
+      auto condition = ParseCondition(is);
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
       };
       int count = db.RemoveIf(predicate);
       cout << "Removed " << count << " entries" << endl;
-    }*/ else if (command == "Find") {
+    } else if (command == "Find") {
       auto condition = ParseCondition(is);
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
@@ -91,7 +90,7 @@ int main() {
   return 0;
 }
 
-void TestParseEvent() {
+/*void TestParseEvent() {
   {
     istringstream is("event");
     AssertEqual(ParseEvent(is), "event", "Parse event without leading spaces");
@@ -115,4 +114,4 @@ void TestAll() {
   tr.RunTest(TestParseCondition, "TestParseCondition");
   tr.RunTest(TestFind, "TestFind");
   tr.RunTest(TestFind, "TestLast");
-}
+}*/

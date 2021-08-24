@@ -27,6 +27,37 @@ std::string Date::getDate() const {
 	return build;
 }
 
+bool operator<(const Date& d1, const Date& d2) {
+	int day1 = d1.getDay(); 
+	int day2 = d2.getDay();
+
+	int month1 = d1.getMonth(); 
+	int month2 = d2.getMonth();
+
+	int year1 = d1.getYear(); 
+	int year2 = d2.getYear();
+
+	bool res = true; 
+
+	if (year1 < year2) { res = true; }
+	else if (year1 == year2) {
+		if (month1 < month2) { res = true; }
+		else if(month1 == month2) {
+			if (day1 < day2) { res = true; }
+			else { res = false; }
+		} else { res = false; }
+	} else { res = false; }
+
+	return res; 
+}
+
+bool operator==(const Date& d1, const Date& d2) {
+	return (!(d1 < d2) && !(d2 < d1));
+}
+
+bool operator>(const Date& d1, const Date& d2) {
+	return (!(d1 < d2) && !(d1 == d2));
+}
 
 std::ostream& operator<<(std::ostream& out, const Date &date) {
 	out << date.getDate();
