@@ -49,6 +49,18 @@ bool EventComparisonNode::Evaluate(const Date& date, const std::string& event) {
 		case Comparison::NotEqual:
 			result = !compareEvents(event);
 			break; 
+		case Comparison::Less:
+			result = (event < _name);
+			break;
+		case Comparison::LessOrEqual:
+			result = (event <= _name);
+			break;
+		case Comparison::Greater:
+			result = (event > _name);
+			break;
+		case Comparison::GreaterOrEqual:
+			result = (event >= _name);
+			break;
 		default: 
 			throw std::logic_error("Not valid comparison operator");
 	}

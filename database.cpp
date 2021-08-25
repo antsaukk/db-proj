@@ -2,7 +2,7 @@
 
 void Database::Add(const Date& d, const std::string& e){
 	if (db_balance[d].insert(e).second) { db_order[d].push_back(e); }
-	//assert(db_order.size() == db_balance.size());
+	assert(db_order.size() == db_balance.size());
 }
 
 std::ostream& Database::Print(std::ostream& os) const{

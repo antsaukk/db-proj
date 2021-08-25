@@ -22,9 +22,7 @@ std::string Date::getDate() const {
 		day = zeroComplement(day);
 	}
 
-	std::string build = (year + '-' + month + '-' + day);
-
-	return build;
+	return (year + '-' + month + '-' + day);
 }
 
 bool operator<(const Date& d1, const Date& d2) {
@@ -37,18 +35,14 @@ bool operator<(const Date& d1, const Date& d2) {
 	int year1 = d1.getYear(); 
 	int year2 = d2.getYear();
 
-	bool res = true; 
-
-	if (year1 < year2) { res = true; }
+	if (year1 < year2) { return true; }
 	else if (year1 == year2) {
-		if (month1 < month2) { res = true; }
+		if (month1 < month2) { return true; }
 		else if(month1 == month2) {
-			if (day1 < day2) { res = true; }
-			else { res = false; }
-		} else { res = false; }
-	} else { res = false; }
-
-	return res; 
+			if (day1 < day2) { return true; }
+			else { return false; }
+		} else { return false; }
+	} else { return false; }
 }
 
 bool operator==(const Date& d1, const Date& d2) {
@@ -69,11 +63,11 @@ Date ParseDate(std::istream& is) {
   is >> d;
   std::replace(d.begin(), d.end(), '-', ' ');
 
-  std::stringstream ss(d); 
+  std::stringstream ss(d);
   std::vector<std::string> date(3);
 
   for (size_t i = 0; i < 3; i++) {
-    ss >> date[i]; 
+    ss >> date[i];
   }
 
   Date D(std::stoi(date[0]), std::stoi(date[1]), std::stoi(date[2]));

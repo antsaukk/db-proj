@@ -23,18 +23,18 @@ public:
 			for (auto& e : events) {
 				if (predicate(date, e)) {
 					result.push_back(date.getDate() + " " + e);
-					counter+=1;
-					//print
+					counter++;
 				}
 			}
 		}
-		//std::cout << "Found " << counter << " entries" << std::endl;
 		return result;
 	}
 
 	template <typename T>
 	int RemoveIf(T predicate) {
 		int counter = 0;
+		std::vector<Date> empty_keys;
+
 		for(auto& [date, events] : db_order) {
 			auto pred = [predicate, date=date](const std::string& event) {
         		return !predicate(date,event);
@@ -46,11 +46,17 @@ public:
 			}
 			events.erase(elements_to_delete, events.end());
 			if (events.empty()) {
-				db_balance.erase(date); 
-				db_order.erase(date); 
+				empty_keys.push_back(date); 
 			}
 		}
-		//assert(db_order.size() == db_balance.size());
+
+		for(auto& date : empty_keys) {
+			db_balance.erase(date); 
+			db_order.erase(date);
+		}
+
+		assert(db_order.size() == db_balance.size());
+		
 		return counter;
 	}
 
