@@ -61,9 +61,7 @@ private:
 
 class LogicalOperationNode : public Node {
 public:
-	LogicalOperationNode(const LogicalOperation& op, 
-						const std::shared_ptr<Node>& n1, 
-						const std::shared_ptr<Node>& n2) : 
+	LogicalOperationNode(const LogicalOperation& op, const std::shared_ptr<Node>& n1, const std::shared_ptr<Node>& n2) : 
 	_op(op), 
 	_n1(n1),
 	_n2(n2)
