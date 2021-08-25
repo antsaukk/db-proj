@@ -56,7 +56,7 @@ public:
 		}
 
 		assert(db_order.size() == db_balance.size());
-		
+
 		return counter;
 	}
 
